@@ -1,8 +1,11 @@
 #include "raylib.h"
-
 #include <stdlib.h>  
 #include <time.h>
 #include <stdlib.h>
+#include<unistd.h>
+
+const int screenWidth = 800;
+const int screenHeight = 700;
 
 // Function adapted from Ben Pfaff's writing on shuffle:
 // https://benpfaff.org/writings/clc/shuffle.html
@@ -20,40 +23,132 @@ void inicializa(int *v, size_t n) {
 		v[i] = i; 
 }
 
-void loadMenu(void) {
-	ClearBackground(BLACK);
-	DrawText("Visualizador de Algoritmos de Ordenacao", 100, 200, 30, WHITE);
-	DrawText("Trabalho final da disciplina de Algoritmos E Estruturas De Dados I 2024", 150, 250, 15, WHITE);
-	DrawText("Feito por Lucas Machado Cogrossi", 270, 275, 15, WHITE);
-	DrawText("Pressione ENTER para inicar", 270, 400, 20, WHITE);
+void sceneMenu(void) {
+    ClearBackground(BLACK);
+
+    const char *menuTitle = "Visualizador de Algoritmos de Ordenacao";
+    DrawText(menuTitle, (screenWidth - MeasureText(menuTitle, 30)) / 2, 200, 30, WHITE);
+
+    const char *menuSubtitle = "Trabalho final da disciplina de Algoritmos E Estruturas De Dados I 2024";
+    DrawText(menuSubtitle, (screenWidth - MeasureText(menuSubtitle, 15)) / 2, 250, 15, WHITE);
+
+    const char *menuSubSubTitle = "Feito por Lucas Machado Cogrossi";
+    DrawText(menuSubSubTitle, (screenWidth - MeasureText(menuSubSubTitle, 15)) / 2, 275, 15, WHITE);
+
+    const char *menuOp1 = "Pressione ENTER para iniciar";
+    DrawText(menuOp1, (screenWidth - MeasureText(menuOp1, 20)) / 2, 400, 20, WHITE);
+}
+
+void sceneSubMenu(void) {
+    ClearBackground(RED);
+
+    const char *subMenuTitle = "Selecione o algoritmo";
+    DrawText(subMenuTitle, (screenWidth - MeasureText(subMenuTitle, 30)) / 2, 200, 30, WHITE);
+
+    const char *subMenuOp1 = "Pressione 1 para quick sort";
+    DrawText(subMenuOp1, (screenWidth - MeasureText(subMenuOp1, 30)) / 2, 300, 30, WHITE);
+
+    const char *subMenuOp2 = "Pressione 2 para bubble sort";
+    DrawText(subMenuOp2, (screenWidth - MeasureText(subMenuOp2, 30)) / 2, 350, 30, WHITE);
+
+    const char *subMenuOp3 = "Pressione 3 para merge sort";
+    DrawText(subMenuOp3, (screenWidth - MeasureText(subMenuOp3, 30)) / 2, 400, 30, WHITE);
+
+	const char *subMenuOp4 = "Pressione ENTER para embaralhar!";
+    DrawText(subMenuOp4, (screenWidth - MeasureText(subMenuOp4, 20)) / 2, 500, 20, WHITE);
+}
+
+void drawVector(int *v, size_t n) {
+	for (int i = 0; i <= n; i++) {
+		DrawRectangle(i, 0, 1, v[i], BLACK);
+	}
+}
+
+void quickSort (int vet[], int posInicio, int posFim) {
+	ClearBackground(RED);
+
+    int posEsq, posDir, pivo, aux, i;
+    posEsq = posInicio;
+    posDir = posFim;
+    pivo = vet[(posEsq + posDir) / 2];
+    while (posEsq <= posDir) {
+	    while (vet[posEsq] < pivo) {
+            posEsq = posEsq + 1;
+        }    
+        while (vet[posDir] > pivo) {
+            posDir = posDir - 1;
+        }    
+        if (posEsq <= posDir) {
+   	        aux = vet[posEsq];
+            vet[posEsq] = vet[posDir];
+            vet[posDir] = aux;
+		
+            posEsq = posEsq + 1;
+            posDir = posDir - 1;
+        }      
+    }
+    if (posInicio < posDir){
+        quickSort(vet, posInicio, posDir);
+    }
+    if (posFim > posEsq){
+        quickSort(vet, posEsq, posFim);
+	}
 }
 
 int main(void) {
-    const int screenWidth = 800;
-    const int screenHeight = 700;
-
-	size_t n = screenHeight;
-
     InitWindow(screenWidth, screenHeight, "Visualizador de Algoritmos de Ordenação");
 
-    SetTargetFPS(60);    
+    SetTargetFPS(144);
 
+	double curTime = GetTime();
+
+	bool menu = true;
+	bool submenu = false;
+	bool showVector = false;
+	bool startQuickSort = false;
+	bool isSorted = false;
+
+	srand(time(NULL));
+	size_t n = screenWidth - 1;
+
+    int *v;	
+	v = (int*) malloc(n * sizeof(int));
+	inicializa(v, n);
 
     while (!WindowShouldClose()) {
-		srand(time(NULL));
-        int *v;	
-		v = (int*) malloc(n * sizeof(int));
-
-		inicializa(v, n);
-		shuffle(v, n);
-
         BeginDrawing();
 		
-			loadMenu();
+			if (menu) {
+				sceneMenu();
+
+			}
+			menu = false;
+
+			if(showVector) {
+			
+				drawVector(v, n);
+			}
+			showVector = false;
+
+
+			if (IsKeyPressed(KEY_ENTER)) {
+				submenu = true;
+				showVector = true;
+				sceneSubMenu();
+				shuffle(v, n);
+			}
+
+	
+			if (IsKeyPressed(KEY_ONE)){
+				showVector = true;
+				submenu = false;
+				startQuickSort = true;
+				quickSort(v, 0, n-1);
+			}
+	
 
         EndDrawing();
     }
-
     CloseWindow();
-		return 0;
+	return 0;
 }
