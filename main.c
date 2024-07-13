@@ -1,40 +1,59 @@
 #include "raylib.h"
 
+#include <stdlib.h>  
+#include <time.h>
+#include <stdlib.h>
+
+// Function adapted from Ben Pfaff's writing on shuffle:
+// https://benpfaff.org/writings/clc/shuffle.html
+void shuffle(int *v, size_t n) {	
+	for (size_t i = 0; i < n - 1; ++i) {
+	  size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+	  int t = v[j];
+	  v[j] = v[i];
+	  v[i] = t;
+	}
+}
+
+void inicializa(int *v, size_t n) {	
+	for (size_t i = 0; i < n; ++i) 
+		v[i] = i; 
+}
+
+void loadMenu(void) {
+	ClearBackground(BLACK);
+	DrawText("Visualizador de Algoritmos de Ordenacao", 100, 200, 30, WHITE);
+	DrawText("Trabalho final da disciplina de Algoritmos E Estruturas De Dados I 2024", 150, 250, 15, WHITE);
+	DrawText("Feito por Lucas Machado Cogrossi", 270, 275, 15, WHITE);
+	DrawText("Pressione ENTER para inicar", 270, 400, 20, WHITE);
+}
+
 int main(void) {
-    // Initialization
-    //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 700;
+
+	size_t n = screenHeight;
 
     InitWindow(screenWidth, screenHeight, "Visualizador de Algoritmos de Ordenação");
 
     SetTargetFPS(60);    
-    //--------------------------------------------------------------------------------------
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
 
-        // Draw
-        //----------------------------------------------------------------------------------
+    while (!WindowShouldClose()) {
+		srand(time(NULL));
+        int *v;	
+		v = (int*) malloc(n * sizeof(int));
+
+		inicializa(v, n);
+		shuffle(v, n);
+
         BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+		
+			loadMenu();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
-
-    return 0;
+    CloseWindow();
+		return 0;
 }
