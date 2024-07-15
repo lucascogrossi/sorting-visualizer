@@ -7,6 +7,8 @@
 const int screenWidth = 800;
 const int screenHeight = 700;
 
+// cc main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+
 // Function adapted from Ben Pfaff's writing on shuffle:
 // https://benpfaff.org/writings/clc/shuffle.html
 void shuffle(int *v, size_t n) {	
