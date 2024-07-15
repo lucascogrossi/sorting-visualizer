@@ -2,7 +2,7 @@
 #include <stdlib.h>  
 #include <time.h>
 #include <stdlib.h>
-#include<unistd.h>
+#include <unistd.h>
 
 const int screenWidth = 800;
 const int screenHeight = 700;
@@ -102,8 +102,8 @@ int main(void) {
 
 	double curTime = GetTime();
 
-	bool menu = true;
-	bool submenu = false;
+	bool showMenu = true;
+	bool showSubMenu = false;
 	bool showVector = false;
 	bool startQuickSort = false;
 	bool isSorted = false;
@@ -118,11 +118,16 @@ int main(void) {
     while (!WindowShouldClose()) {
         BeginDrawing();
 		
-			if (menu) {
+			if (showMenu) {
 				sceneMenu();
 
 			}
-			menu = false;
+			showMenu = false;
+
+            if (showSubMenu) {
+                sceneSubMenu();
+            }
+            showSubMenu = false;
 
 			if(showVector) {
 			
@@ -132,20 +137,19 @@ int main(void) {
 
 
 			if (IsKeyPressed(KEY_ENTER)) {
-				submenu = true;
+				showSubMenu = true;
 				showVector = true;
-				sceneSubMenu();
 				shuffle(v, n);
 			}
 
 	
 			if (IsKeyPressed(KEY_ONE)){
 				showVector = true;
-				submenu = false;
+				showSubMenu = false;
 				startQuickSort = true;
 				quickSort(v, 0, n-1);
 			}
-	
+            
 
         EndDrawing();
     }
