@@ -62,7 +62,7 @@ void sceneSubMenu(void) {
 
 void drawVector(int *v, size_t n) {
 	for (int i = 0; i <= n; i++) {
-		DrawRectangle(i, screenHeight - v[i], 1, v[i], BLUE);
+		    DrawRectangle(i, screenHeight - v[i], 1, v[i], BLUE);
 	}
 }
 
@@ -84,7 +84,11 @@ void quickSort (int vet[], int posInicio, int posFim) {
    	        aux = vet[posEsq];
             vet[posEsq] = vet[posDir];
             vet[posDir] = aux;
-		
+
+            BeginDrawing();
+            drawVector(vet, posFim);
+            EndDrawing();
+
             posEsq = posEsq + 1;
             posDir = posDir - 1;
         }      
@@ -124,7 +128,6 @@ int main(void) {
 				sceneMenu();
 
 			}
-			showMenu = false;
 
             if (showSubMenu) {
                 sceneSubMenu();
@@ -139,6 +142,7 @@ int main(void) {
 
 
 			if (IsKeyPressed(KEY_ENTER)) {
+                showMenu = false;
 				showSubMenu = true;
 				showVector = true;
 				shuffle(v, n);
