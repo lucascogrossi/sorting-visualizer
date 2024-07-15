@@ -27,20 +27,20 @@ void sceneMenu(void) {
     ClearBackground(BLACK);
 
     const char *menuTitle = "Visualizador de Algoritmos de Ordenacao";
-    DrawText(menuTitle, (screenWidth - MeasureText(menuTitle, 30)) / 2, 200, 30, WHITE);
+    DrawText(menuTitle, (screenWidth - MeasureText(menuTitle, 30)) / 2, 200, 30, BLUE);
 
     const char *menuSubtitle = "Trabalho final da disciplina de Algoritmos E Estruturas De Dados I 2024";
-    DrawText(menuSubtitle, (screenWidth - MeasureText(menuSubtitle, 15)) / 2, 250, 15, WHITE);
+    DrawText(menuSubtitle, (screenWidth - MeasureText(menuSubtitle, 15)) / 2, 250, 15, BLUE);
 
     const char *menuSubSubTitle = "Feito por Lucas Machado Cogrossi";
-    DrawText(menuSubSubTitle, (screenWidth - MeasureText(menuSubSubTitle, 15)) / 2, 275, 15, WHITE);
+    DrawText(menuSubSubTitle, (screenWidth - MeasureText(menuSubSubTitle, 15)) / 2, 275, 15, BLUE);
 
     const char *menuOp1 = "Pressione ENTER para iniciar";
-    DrawText(menuOp1, (screenWidth - MeasureText(menuOp1, 20)) / 2, 400, 20, WHITE);
+    DrawText(menuOp1, (screenWidth - MeasureText(menuOp1, 20)) / 2, 400, 20, BLUE);
 }
 
 void sceneSubMenu(void) {
-    ClearBackground(RED);
+    ClearBackground(BLACK);
 
     const char *subMenuTitle = "Selecione o algoritmo";
     DrawText(subMenuTitle, (screenWidth - MeasureText(subMenuTitle, 30)) / 2, 200, 30, WHITE);
@@ -60,12 +60,12 @@ void sceneSubMenu(void) {
 
 void drawVector(int *v, size_t n) {
 	for (int i = 0; i <= n; i++) {
-		DrawRectangle(i, 0, 1, v[i], BLACK);
+		DrawRectangle(i, screenHeight - v[i], 1, v[i], BLUE);
 	}
 }
 
 void quickSort (int vet[], int posInicio, int posFim) {
-	ClearBackground(RED);
+	ClearBackground(BLACK);
 
     int posEsq, posDir, pivo, aux, i;
     posEsq = posInicio;
