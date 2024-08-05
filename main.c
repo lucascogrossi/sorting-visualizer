@@ -57,12 +57,8 @@ void sceneSubMenu(void) {
     const char *subMenuOp1 = "Pressione 1 para bubble sort";
     DrawText(subMenuOp1, (screenWidth - MeasureText(subMenuOp1, 30)) / 2, 300, 30, WHITE);
 
-    const char *subMenuOp2 = "Pressione 2 para merge sort";
-    DrawText(subMenuOp2, (screenWidth - MeasureText(subMenuOp2, 30)) / 2, 350, 30, WHITE);
-
-    const char *subMenuOp3 = "Pressione 3 para quick sort";
-    DrawText(subMenuOp3, (screenWidth - MeasureText(subMenuOp3, 30)) / 2, 400, 30, WHITE);
-
+    const char *subMenuOp2 = "Mais algoritmos em breve...";
+    DrawText(subMenuOp2, (screenWidth - MeasureText(subMenuOp2, 30)) / 2, 400, 30, WHITE);
 }
 
 int main(void) {
