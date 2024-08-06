@@ -1,8 +1,12 @@
+// Compile with 
+// cc main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+// link the library if necessary:
+// // cc main.c -lraylib -L [PATH] -lGL -lm -lpthread -ldl -lrt -lX11
+
+
+
 #include "raylib.h"
 #include <stdlib.h>
-
-// cc main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
-
 
 const int screenWidth = 800;
 const int screenHeight = 700;
