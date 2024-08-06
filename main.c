@@ -123,10 +123,10 @@ int main(void) {
                 }
                 
                 if (i < n) {
-                    j = j + 1;
+                    j++;
                     if (j >=  n - i - 1) {
                         j = 0;
-                        i  = i + 1;
+                        i++;
                     }
                 }
             }
